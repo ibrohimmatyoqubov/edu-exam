@@ -1,0 +1,55 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Yordamchi tekshiruv funksiyalari:
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'ADMIN';
+    }
+
+    // Foydalanuvchilar to'plami
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+
+    // Guruhlar va Fanlar
+    match /groups/{groupId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+
+    match /subjects/{subjectId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+
+    // Nazorat ishlari (Exams)
+    match /exams/{examId} {
+      // O'quvchilar faqat ACTIVE bo'lgan nazoratlarni o'qiy oladi
+      allow read: if isAuthenticated() && (isAdmin() || resource.data.isActive == true);
+      allow write: if isAdmin();
+    }
+
+    // Savollar to'plami
+    match /questions/{questionId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+
+    // Imtihon sessiyalari (Anti-Cheat & Natijalar)
+    match /exam_sessions/{sessionId} {
+      allow read: if isAdmin() || (isAuthenticated() && resource.data.studentId == request.auth.uid);
+      allow create: if isAuthenticated();
+      allow update: if isAuthenticated() && (
+        isAdmin() ||
+        (resource.data.studentId == request.auth.uid && resource.data.status == 'in_progress')
+      );
+    }
+  }
+}

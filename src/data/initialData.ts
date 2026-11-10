@@ -1,0 +1,356 @@
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+import { User, Group, Subject, Exam, Question, ExamSession } from '../types';
+
+export const initialGroups: Group[] = [
+  {
+    id: 'grp-1',
+    name: '01-26',
+    description: 'Dasturlash va veb texnologiyalar guruhi',
+    studentCount: 2,
+    createdAt: '2026-09-01T08:00:00Z',
+  },
+  {
+    id: 'grp-2',
+    name: '02-26',
+    description: 'Matematika va algoritmlar chuqurlashtirilgan guruhi',
+    studentCount: 2,
+    createdAt: '2026-09-01T08:00:00Z',
+  },
+  {
+    id: 'grp-3',
+    name: 'KTD04-26',
+    description: 'Kompyuter tarmoqlari va axborot xavfsizligi guruhi',
+    studentCount: 0,
+    createdAt: '2026-09-05T09:30:00Z',
+  },
+];
+
+export const initialUsers: User[] = [
+  {
+    id: 'usr-admin-1',
+    fullName: 'Azizbek Rahimov (Bosh O\'qituvchi)',
+    email: 'admin@eduexam.uz',
+    password: 'admin123',
+    role: 'ADMIN',
+    createdAt: '2026-08-15T10:00:00Z',
+  },
+  {
+    id: 'usr-stu-1',
+    fullName: 'Sardor Rustamov',
+    studentId: 'EDU-0126-001',
+    password: '0126-Sardor',
+    role: 'STUDENT',
+    groupId: 'grp-1',
+    groupName: '01-26',
+    createdAt: '2026-09-01T10:00:00Z',
+  },
+  {
+    id: 'usr-stu-2',
+    fullName: 'Malika Shokirova',
+    studentId: 'EDU-0126-002',
+    password: '0126-Malika',
+    role: 'STUDENT',
+    groupId: 'grp-1',
+    groupName: '01-26',
+    createdAt: '2026-09-01T10:15:00Z',
+  },
+  {
+    id: 'usr-stu-3',
+    fullName: 'Jasur Alimov',
+    studentId: 'EDU-0226-001',
+    password: '0226-Jasur',
+    role: 'STUDENT',
+    groupId: 'grp-2',
+    groupName: '02-26',
+    createdAt: '2026-09-02T11:00:00Z',
+  },
+  {
+    id: 'usr-stu-4',
+    fullName: 'Dilnoza Karimova',
+    studentId: 'EDU-0226-002',
+    password: '0226-Dilnoza',
+    role: 'STUDENT',
+    groupId: 'grp-2',
+    groupName: '02-26',
+    createdAt: '2026-09-02T11:20:00Z',
+  },
+];
+
+export const initialSubjects: Subject[] = [
+  {
+    id: 'sbj-1',
+    name: 'Veb Dasturlash & JavaScript',
+    code: 'WEB-201',
+    createdAt: '2026-09-01T08:00:00Z',
+  },
+  {
+    id: 'sbj-2',
+    name: 'Oliy Matematika va Algebra',
+    code: 'MATH-101',
+    createdAt: '2026-09-01T08:00:00Z',
+  },
+  {
+    id: 'sbj-3',
+    name: 'Umumiy va Kvant Fizika',
+    code: 'PHYS-301',
+    createdAt: '2026-09-05T08:00:00Z',
+  },
+];
+
+export const initialExams: Exam[] = [
+  {
+    id: 'ex-1',
+    subjectId: 'sbj-1',
+    subjectName: 'Veb Dasturlash & JavaScript',
+    title: '1-Oraliq Nazorat: TypeScript va React asoslari',
+    type: 'ORALIQ_1',
+    durationMinutes: 15,
+    passingScore: 60,
+    maxAttempts: 1,
+    groupIds: ['grp-1'],
+    isActive: true, // START qilingan
+    startedAt: '2026-11-09T10:00:00Z',
+    totalPoints: 25,
+    questionCount: 5,
+    createdAt: '2026-11-01T09:00:00Z',
+  },
+  {
+    id: 'ex-2',
+    subjectId: 'sbj-2',
+    subjectName: 'Oliy Matematika va Algebra',
+    title: 'Yakuniy Nazorat Ishi: Funksiyalar va Hosilalar',
+    type: 'YAKUNIY',
+    durationMinutes: 20,
+    passingScore: 70,
+    maxAttempts: 1,
+    groupIds: ['grp-2'],
+    isActive: true, // START qilingan
+    startedAt: '2026-11-09T09:30:00Z',
+    totalPoints: 20,
+    questionCount: 4,
+    createdAt: '2026-11-02T14:00:00Z',
+  },
+  {
+    id: 'ex-3',
+    subjectId: 'sbj-3',
+    subjectName: 'Umumiy va Kvant Fizika',
+    title: '2-Oraliq Nazorat: Termodinamika Qonunlari',
+    type: 'ORALIQ_2',
+    durationMinutes: 30,
+    passingScore: 65,
+    maxAttempts: 1,
+    groupIds: ['grp-3'],
+    isActive: false, // Hozircha STOP qilingan
+    totalPoints: 15,
+    questionCount: 3,
+    createdAt: '2026-11-05T12:00:00Z',
+  },
+];
+
+export const initialQuestions: Question[] = [
+  // Exam 1 Questions (Frontend / React)
+  {
+    id: 'q-101',
+    examId: 'ex-1',
+    questionText: 'React-da komponent qayta chizilganda (re-render) o\'zgarmas funksiyani xotirada saqlash uchun qaysi hook ishlatiladi?',
+    options: [
+      { id: 'opt-a', text: 'useMemo' },
+      { id: 'opt-b', text: 'useCallback' },
+      { id: 'opt-c', text: 'useEffect' },
+      { id: 'opt-d', text: 'useRef' },
+    ],
+    correctOptionId: 'opt-b',
+    points: 5,
+    explanation: 'useCallback hook-i funksiya nusxasini dependency-lar o\'zgarmaguncha xotirada saqlaydi.',
+  },
+  {
+    id: 'q-102',
+    examId: 'ex-1',
+    questionText: 'TypeScript-da faqat o\'qish uchun mo\'ljallangan xususiyatni qanday belgilash mumkin?',
+    options: [
+      { id: 'opt-a', text: 'readonly keyword yordamida' },
+      { id: 'opt-b', text: 'static kalit so\'zi orqali' },
+      { id: 'opt-c', text: 'const property' },
+      { id: 'opt-d', text: 'private mut' },
+    ],
+    correctOptionId: 'opt-a',
+    points: 5,
+    explanation: 'TypeScript-da obyekt xususiyatlariga o\'zgartirish kiritmaslik uchun `readonly` modifikatori qo\'llaniladi.',
+  },
+  {
+    id: 'q-103',
+    examId: 'ex-1',
+    questionText: 'Brauzerda sahifa boshqa oynaga o\'tganda qaysi hodisa (event) faollashadi?',
+    options: [
+      { id: 'opt-a', text: 'window.onunload' },
+      { id: 'opt-b', text: 'document.visibilitychange' },
+      { id: 'opt-c', text: 'window.onresize' },
+      { id: 'opt-d', text: 'document.onkeypress' },
+    ],
+    correctOptionId: 'opt-b',
+    points: 5,
+    explanation: '`document.visibilitychange` hodisasi foydalanuvchi sahifani yashirganda yoki boshqa tabga o\'tganda ishga tushadi.',
+  },
+  {
+    id: 'q-104',
+    examId: 'ex-1',
+    questionText: 'JavaScript-da "===" va "==" operatorlari o\'rtasidagi asosiy farq nima?',
+    options: [
+      { id: 'opt-a', text: '=== faqat qiymatni, == esa turini ham tekshiradi' },
+      { id: 'opt-b', text: '=== qat\'iy tenglik bo\'lib, qiymat va ma\'lumot turini birdek tekshiradi' },
+      { id: 'opt-c', text: 'Ikkala operator ham bir xil ishlaydi' },
+      { id: 'opt-d', text: '== tezroq ishlaydi' },
+    ],
+    correctOptionId: 'opt-b',
+    points: 5,
+    explanation: '`===` qat\'iy tenglik bo\'lib, type coercion (tur o\'zgarishi) sodir etmasdan ikkala tomonni solishtiradi.',
+  },
+  {
+    id: 'q-105',
+    examId: 'ex-1',
+    questionText: 'Tailwind CSS-da mobil ekranlar uchun birinchi navbatda qanday yondashuv qo\'llaniladi?',
+    options: [
+      { id: 'opt-a', text: 'Desktop-first' },
+      { id: 'opt-b', text: 'Mobile-first (prefiksiz sinflar mobil uchun, sm:/md: kattaroq ekranlar uchun)' },
+      { id: 'opt-c', text: 'Faqat @media so\'rovlari orqali' },
+      { id: 'opt-d', text: 'Container queries majburiy' },
+    ],
+    correctOptionId: 'opt-b',
+    points: 5,
+    explanation: 'Tailwind CSS sukut bo\'yicha mobile-first arxitekturasiga ega.',
+  },
+
+  // Exam 2 Questions (Matematika)
+  {
+    id: 'q-201',
+    examId: 'ex-2',
+    questionText: 'f(x) = x³ - 3x funksiyasining hosilasini toping:',
+    options: [
+      { id: 'opt-a', text: 'f\'(x) = 3x² - 3' },
+      { id: 'opt-b', text: 'f\'(x) = x² - 3' },
+      { id: 'opt-c', text: 'f\'(x) = 3x² + 3' },
+      { id: 'opt-d', text: 'f\'(x) = 3x - 1' },
+    ],
+    correctOptionId: 'opt-a',
+    points: 5,
+  },
+  {
+    id: 'q-202',
+    examId: 'ex-2',
+    questionText: 'To\'g\'ri burchakli uchburchakda gipotenuza c=10, katet a=6 bo\'lsa, ikkinchi katet b qanchaga teng?',
+    options: [
+      { id: 'opt-a', text: '7' },
+      { id: 'opt-b', text: '8' },
+      { id: 'opt-c', text: '9' },
+      { id: 'opt-d', text: '6.5' },
+    ],
+    correctOptionId: 'opt-b',
+    points: 5,
+  },
+  {
+    id: 'q-203',
+    examId: 'ex-2',
+    questionText: 'log₂(32) ifodaning qiymatini hisoblang:',
+    options: [
+      { id: 'opt-a', text: '4' },
+      { id: 'opt-b', text: '5' },
+      { id: 'opt-c', text: '6' },
+      { id: 'opt-d', text: '16' },
+    ],
+    correctOptionId: 'opt-b',
+    points: 5,
+  },
+  {
+    id: 'q-204',
+    examId: 'ex-2',
+    questionText: 'Kvadrat tenglama D = b² - 4ac > 0 bo\'lsa, tenglama nechta haqiqiy ildizga ega?',
+    options: [
+      { id: 'opt-a', text: '1 ta' },
+      { id: 'opt-b', text: 'Ildizga ega emas' },
+      { id: 'opt-c', text: '2 ta turli haqiqiy ildiz' },
+      { id: 'opt-d', text: 'Cheksiz ko\'p' },
+    ],
+    correctOptionId: 'opt-c',
+    points: 5,
+  },
+];
+
+export const initialExamSessions: ExamSession[] = [
+  {
+    id: 'sess-1',
+    examId: 'ex-1',
+    examTitle: '1-Oraliq Nazorat: TypeScript va React asoslari',
+    subjectName: 'Veb Dasturlash & JavaScript',
+    studentId: 'EDU-0126-002',
+    studentName: 'Malika Shokirova',
+    studentEmail: 'malika@eduexam.uz',
+    groupId: 'grp-1',
+    groupName: '01-26',
+    status: 'completed',
+    startedAt: '2026-11-09T10:05:00Z',
+    submittedAt: '2026-11-09T10:18:22Z',
+    timeSpentSeconds: 802,
+    answers: {
+      'q-101': 'opt-b',
+      'q-102': 'opt-a',
+      'q-103': 'opt-b',
+      'q-104': 'opt-b',
+      'q-105': 'opt-b',
+    },
+    score: 25,
+    totalScore: 25,
+    percentage: 100,
+    passed: true,
+    violationsCount: 0,
+    violations: [],
+  },
+  {
+    id: 'sess-2',
+    examId: 'ex-2',
+    examTitle: 'Yakuniy Nazorat Ishi: Funksiyalar va Hosilalar',
+    subjectName: 'Oliy Matematika va Algebra',
+    studentId: 'EDU-0226-002',
+    studentName: 'Dilnoza Karimova',
+    studentEmail: 'dilnoza@eduexam.uz',
+    groupId: 'grp-2',
+    groupName: '02-26',
+    status: 'terminated',
+    startedAt: '2026-11-09T09:35:00Z',
+    submittedAt: '2026-11-09T09:41:10Z',
+    timeSpentSeconds: 370,
+    answers: {
+      'q-201': 'opt-a',
+      'q-202': 'opt-b',
+    },
+    score: 10,
+    totalScore: 20,
+    percentage: 50,
+    passed: false,
+    violationsCount: 3,
+    terminationReason: 'Anti-Cheat cheklovi: 3 marta boshqa oynaga/tabga o\'tish (visibilitychange/blur) aniqlandi.',
+    violations: [
+      {
+        id: 'viol-1',
+        type: 'tab_switch',
+        timestamp: '2026-11-09T09:37:12Z',
+        details: 'Brauzer yorlig\'i yashirildi (document.visibilityState: hidden)',
+      },
+      {
+        id: 'viol-2',
+        type: 'window_blur',
+        timestamp: '2026-11-09T09:39:45Z',
+        details: 'Oyna faolligi yo\'qotildi (window blur / boshqa dasturga o\'tildi)',
+      },
+      {
+        id: 'viol-3',
+        type: 'fullscreen_exit',
+        timestamp: '2026-11-09T09:41:10Z',
+        details: 'To\'liq ekran rejimidan (Fullscreen) chiqib ketildi. Test yakunlandi.',
+      },
+    ],
+  },
+];

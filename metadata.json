@@ -1,0 +1,6 @@
+{
+  "name": "EduExam Secure - Nazorat Ishlari Tizimi",
+  "description": "Oraliq va yakuniy nazorat ishlari uchun yuqori xavfsizlikka (Anti-Cheat) ega zamonaviy ta'lim va imtihon tizimi.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
